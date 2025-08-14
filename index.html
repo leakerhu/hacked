@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SBTE RegID PDF Viewer</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }
+    .card { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 12px rgba(0,0,0,0.1); }
+    h1 { text-align: center; margin-bottom: 20px; }
+    .row { display: flex; gap: 10px; margin-bottom: 20px; }
+    input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; }
+    button { padding: 10px 16px; border: none; background: #007bff; color: white; font-size: 16px; border-radius: 6px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    iframe { width: 100%; height: 600px; border: none; }
+    .error { color: red; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h1>SBTE Bihar - RegID PDF Viewer</h1>
+  <div class="row">
+    <input id="regId" type="text" placeholder="Apna RegID daalein (e.g. 583100)">
+    <button onclick="loadPDF()">View PDF</button>
+  </div>
+  <div id="error" class="error"></div>
+  <iframe id="pdfFrame"></iframe>
+</div>
+
+<script>
+function loadPDF() {
+  const regId = document.getElementById("regId").value.trim();
+  const errorDiv = document.getElementById("error");
+  const frame = document.getElementById("pdfFrame");
+
+  errorDiv.textContent = "";
+  if (!regId) {
+    errorDiv.textContent = "⚠️ Pehle apna RegID daalein.";
+    return;
+  }
+
+  const pdfUrl = `http://localhost:3000/pdf?regId=${encodeURIComponent(regId)}`;
+  frame.src = pdfUrl;
+}
+</script>
+
+</body>
+</html>
